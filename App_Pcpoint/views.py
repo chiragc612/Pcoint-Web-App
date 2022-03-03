@@ -6,9 +6,6 @@ from .models import AddProduct, Carts, Contact, Signup, Wishlists, Transaction
 from .paytm import generate_checksum, verify_checksum
 from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
-
-
 def index(request):
     return render(request, "index.html")
 
@@ -294,11 +291,8 @@ def initiate_payment(request):
         ('TXN_AMOUNT', str(transaction.amount)),
         ('CHANNEL_ID', settings.PAYTM_CHANNEL_ID),
         ('WEBSITE', settings.PAYTM_WEBSITE),
-        # ('EMAIL', request.user.email),
-        # ('MOBILE_N0', '9911223388'),
         ('INDUSTRY_TYPE_ID', settings.PAYTM_INDUSTRY_TYPE_ID),
         ('CALLBACK_URL', 'http://localhost:8000/callback/'),
-        # ('PAYMENT_MODE_ONLY', 'NO'),
     )
 
     paytm_params = dict(params)
@@ -340,10 +334,6 @@ def callback(request):
 
 
 def myorders(request):
-    # netPrice = 0
     user = Signup.objects.get(email=request.session['email'])
     carts = Carts.objects.filter(user=user, status=True)
-    # for i in carts:
-        # netPrice = netPrice+i.totalprice
-    #request.session['carts_count'] = len(carts)
     return render(request, 'myorders.html', {'carts': carts,})

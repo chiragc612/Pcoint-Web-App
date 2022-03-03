@@ -1,7 +1,6 @@
 from django.utils import timezone
 from django.db import models
 
-# Create your models here.
 class Contact(models.Model):
 	name = models.CharField(max_length=100)
 	phonenumber = models.CharField(max_length=100)
